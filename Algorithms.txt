@@ -1,0 +1,489 @@
+Binary search=>
+#Iterative
+steps-
+If the array is not sorted, you would need to first sort the array before performing binary search. 
+There are many sorting algorithms that you can use, such as quicksort, mergesort, or heapsort.
+Once you have sorted the array, you can then perform binary search as usual. 
+Here is an algorithm for iterative binary search on a sorted array-
+
+1. Set the initial values of lower bound l and upper bound r as 0 and n-1, respectively, where n is the number of elements in the sorted array.
+2. While l <= r, do the following:
+	a. Calculate the middle index mid as (l + r) / 2.
+	b. If the element at the mid index is equal to the target element, return mid.
+	c. If the element at the mid index is less than the target element, update l = mid + 1.
+	d. If the element at the mid index is greater than the target element, update r = mid - 1.
+3. If the target element is not found after the loop, return -1 to indicate that the element is not present in the array.
+
+Pseudocode-
+def iterative_binary_search(arr, target):
+    l, r = 0, len(arr) - 1
+    while l <= r:
+        mid = (l + r) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            l = mid + 1
+        else:
+            r = mid - 1
+    return -1
+
+#Recursive
+steps-
+1. If the lower bound l is greater than the upper bound r, 
+return -1 to indicate that the target element is not present in the array.
+2. Calculate the middle index mid as (l + r) / 2.
+3. If the element at the mid index is equal to the target element, return mid.
+4. If the element at the mid index is less than the target element, 
+   recursively call the binary search function on the right half of the array, i.e., with l = mid + 1.
+5. If the element at the mid index is greater than the target element, 
+   recursively call the binary search function on the left half of the array, i.e., with r = mid - 1.
+
+Pseudo code-
+def recursive_binary_search(arr, target, l, r):
+    if l > r:
+        return -1
+    mid = (l + r) // 2
+    if arr[mid] == target:
+        return mid
+    elif arr[mid] < target:
+        return recursive_binary_search(arr, target, mid + 1, r)
+    else:
+        return recursive_binary_search(arr, target, l, mid - 1)
+----------------------------------------------------------------------------------------------------------------------------
+
+Quick Sort =>
+Parttition-
+Step 1 − Choose the highest index value has pivot
+Step 2 − Take two variables to point left and right of the list excluding pivot
+Step 3 − left points to the low index
+Step 4 − right points to the high
+Step 5 − while value at left is less than pivot move right
+Step 6 − while value at right is greater than pivot move left
+Step 7 − if both step 5 and step 6 does not match swap left and right
+Step 8 − if left ≥ right, the point where they met is new pivot
+
+Quicksrt-
+Step 1 − Make the right-most index value pivot
+Step 2 − partition the array using pivot value
+Step 3 − quicksort left partition recursively
+Step 4 − quicksort right partition recursively
+
+Time complexity-->  O(n log n)
+
+
+----------------------------------------------------------------------------------------------------------------------------
+Median Of Median=>
+
+The algorithm is as follows,
+
+1. Divide the list into sublists if size n, assume 5.
+2. Initialize an empty array M to store medians we obtain from smaller sublists.
+3. Loop through the whole list in sizes of 5, assuming our list is divisible by 5.
+4. For n/5 sublists, use select brute-force subroutine to select a median m, which is in the 3rd rank out of 5 elements.
+5. Append medians obtained from the sublists to the array M.
+6. Use quickSelect subroutine to find the true median from array M, The median obtained is the viable pivot.
+7. Terminate the algorithm once the base case is hit, that is, when the sublist becomes small enough. Use Select brute-force subroutine to find the median.
+
+Pseudo code=
+medianOfMedians(arr[1...n])
+    if(n < 5 return Select(arr[1...n], n/2))
+    Let M be an empty list
+    For i from 0 to n/5 - 1:
+        Let m = Select(arr[5i + 1...5i+5], 3)
+        Add m to M
+    Return QuickSelect(M[1...n/5], n/10)
+End medianOfMedians
+
+Time complexity-->  O(n)
+
+--------------------------------------------------------------------------------------------------------------------
+
+Coin changing problem-
+Greedy method-
+1. Sort the array of coins in decreasing order.
+2. Initialize ans vector as empty.
+3. Find the largest denomination that is smaller than remaining amount and while it is smaller than the remaining amount:
+	Add found denomination to ans. Subtract value of found denomination from amount.
+4. If amount becomes 0, then print ans.
+
+Input: V = 70
+Output: 2
+Explanation: We need a 50 Rs note and a 20 Rs note.
+
+Dynamic method-
+
+The coin changing problem can also be solved using dynamic programming. 
+The following is an algorithm for solving the coin changing problem using dynamic programming:
+
+Inputs:
+n: the amount to be changed
+coins: an array of coin denominations
+
+Output: the minimum number of coins needed to make change for the amount n
+
+Algorithm:
+
+1. Create an array M of size (n+1) initialized with infinite values except for M[0] = 0.
+2. Create an array S of size (n+1) initialized with 0s.
+3. For each denomination of coins i from 1 to k:
+	For each amount j from 1 to n:
+		If j >= coins[i], then:
+			If (1 + M[j-coins[i]]) < M[j], then set M[j] = 1 + M[j-coins[i]] and set S[j] = i
+4. Output the value M[n].
+5. To obtain the coins used, follow the steps:
+	Initialize l to n.
+	While l > 0, output the coin S[l] and set l = l - coins[S[l]].
+
+Explanation:
+-M[j] represents the minimum number of coins required to make change for the amount j.
+-S[j] stores the denomination of the last coin used to make change for the amount j.
+-In step 3, for each coin denomination i and each amount j, if j is greater than or equal to the value of coin denomination i, 
+we check if using the coin denomination i results in a smaller number of coins required to make change for the amount j than using 
+the previous denomination of coins. If it does, then we update the value of M[j] with the new minimum number of coins required 
+to make change for the amount j, and we update S[j] with the denomination of the coin used to make this change.
+-Finally, we output the value of M[n] which represents the minimum number of coins required to make change for the amount n. 
+And we use S array to get the coins used to make change.
+
+
+-------------------------------------------------------------------------------------------------------------------
+0/1 knasack problem-
+dynamic-
+
+The dynamic programming approach for solving the 0/1 Knapsack problem involves the following steps:
+
+1. Create a two-dimensional array K[n+1][W+1], where n is the number of items and W is the maximum capacity of the knapsack.
+
+2. Initialize the first row and first column of the array to 0, since there are no items to choose from 
+when the knapsack has a capacity of 0 and when there are no items to choose from.
+
+3. For each item i, iterate through each weight value from 0 to W. If the weight of the item is 
+greater than the current weight value, copy the value from the previous row into the current cell. 
+Otherwise, calculate the maximum value that can be obtained by either selecting the current item or not selecting it.
+
+4. If the current item is selected, the value is added to the value of the item in the previous row 
+at the current weight value minus the weight of the current item. If the current item is not selected, 
+the value is simply copied from the previous row at the same weight value.
+
+5. The maximum value that can be obtained from all the items while not exceeding the maximum capacity of 
+the knapsack is stored in the last cell of the array K[n][W].
+
+6. Trace back through the array K starting from the last cell to determine which items were selected. 
+If the value in the current cell is the same as the value in the previous row for the same weight, 
+then the current item was not selected. Otherwise, the current item was selected and its weight is subtracted from the weight value of the previous row.
+
+7. The selected items and their respective values and weights can be output.
+
+Here's the pseudo code for the dynamic programming solution to the 0/1 Knapsack problem:
+
+Create a two-dimensional array K[n+1][W+1]
+Initialize K[0][j] = 0 for 0 <= j <= W
+Initialize K[i][0] = 0 for 0 <= i <= n
+for i = 1 to n
+for j = 1 to W
+if w[i] > j
+K[i][j] = K[i-1][j]
+else
+K[i][j] = max(K[i-1][j], K[i-1][j-w[i]] + v[i])
+Trace back through K to determine which items were selected
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+min-max
+
+1. Define function max_min() which takes input:
+        - An integer array 'arr' of size 'n'
+        - An integer 'low' indicating the starting index of array
+        - An integer 'high' indicating the ending index of array
+        - Two integer references 'max_num' and 'min_num'
+2. If 'low' equals 'high', set both 'max_num' and 'min_num' equal to arr[low]
+3. Else if 'high' equals 'low'+1:
+        a. If arr[low] is greater than arr[high], set 'max_num' to arr[low] and 'min_num' to arr[high]
+        b. Else, set 'max_num' to arr[high] and 'min_num' to arr[low]
+4. Else:
+        a. Calculate the middle index 'mid' as the average of 'low' and 'high'
+        b. Recursively call max_min() function with inputs:
+                i. arr
+                ii. low
+                iii. mid
+                iv. 'max_num' and 'min_num'
+        c. Recursively call max_min() function with inputs:
+                i. arr
+                ii. mid+1
+                iii. high
+                iv. 'max_num' and 'min_num'
+        d. Compare 'max_num' with the maximum of arr[low] and arr[high], update 'max_num' with the larger value
+        e. Compare 'min_num' with the minimum of arr[low] and arr[high], update 'min_num' with the smaller value
+5. End the function
+
+6. In the main function, declare integer variables 'n', 'max_num', 'min_num' and integer array 'arr' of size 'n'
+7. Take input for 'n' and array 'arr' from the user
+8. Call max_min() function with inputs:
+        a. arr
+        b. 0 (for the starting index of array)
+        c. n-1 (for the ending index of array)
+        d. 'max_num' and 'min_num' as references
+9. Display the 'max_num' and 'min_num' values as the maximum and minimum elements of the array
+10. End the program.
+
+time complexity-O(n log n)
+--------------------------------------------------------------------------------------------------------------------------------
+Job sequencing problem-
+The objective is to maximize the total profit by scheduling the jobs in such a way that the total profit is maximized, subject to the constraint that each job must be completed by its deadline.
+
+The algorithm works as follows:
+
+1. Take the input from the user: the number of jobs, the deadline and profit for each job.
+2. Sort the jobs in descending order of profit using a bubble sort algorithm. 
+This is because we want to schedule the jobs that have the highest profit first.
+3. Create an array of time slots equal to the maximum deadline. Initialize all slots to 0, indicating that they are free.
+4. Iterate over each job in the sorted order. For each job, find the latest available time slot before its deadline, 
+and allocate the job to that time slot if it is available.
+5. If a time slot is already occupied, move to the previous time slot until an unoccupied time slot is found.
+6. Keep track of the total profit earned from the scheduled jobs.
+7. Output the total profit earned.
+
+time complexity-O(n^2), where n is the number of jobs.
+
+-----------------------------------------------------------------------------------------------------------------------------
+Huffman coding=>>
+
+Here is the algorithm for Huffman coding with input as a string:
+
+1. Initialize an array 'frequency' of size 256 with all elements as 0.
+2. Traverse the string and increment the corresponding frequency of each character in the 'frequency' array.
+3. Create a priority queue of nodes where each node contains a character and its frequency.
+4. Insert each character and its frequency as a node into the priority queue.
+5. While the size of the priority queue is greater than 1:
+Pop the two nodes with the lowest frequency from the priority queue and merge them to form a new node.
+Set the frequency of the new node as the sum of the frequencies of the two nodes that were popped.
+Set the two popped nodes as the left and right child of the new node.
+Push the new node into the priority queue.
+6. The last node remaining in the priority queue is the root of the Huffman tree.
+7. Traverse the Huffman tree to assign binary codes to each character:
+Start at the root of the Huffman tree.
+Traverse left child and append '0' to the code.
+Traverse right child and append '1' to the code.
+When a leaf node is reached, the code assigned to that character is the code obtained by traversing the path from the root to that leaf node.
+8. Print the character, frequency, and binary code for each character in the input string.
+
+
+time complexity- O(nlogn)
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Activity selection =>
+
+The activity selection problem is a greedy algorithm problem that involves selecting a 
+maximum number of non-overlapping activities given their start and end times. Here is an algorithm for the activity selection problem:
+
+1. Sort the activities by their finish time in ascending order.
+2. Select the first activity in the sorted list and mark it as selected.
+3. For each remaining activity in the sorted list:
+	a. If the start time of the current activity is greater than or equal to the finish time of the last selected activity, 
+	   then select the current activity and mark it as selected.
+	b. If the start time of the current activity is less than the finish time of the last selected activity, then discard the current activity.
+4. The selected activities are the maximum number of non-overlapping activities.
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Travling salesman problem-
+
+Algorithm: Traveling Salesman Problem using Brute Force and Backtracking
+
+1.Define N as the number of cities.
+2.Define INF as a very large value that will be used to initialize the minimum distance.
+3.Define a 2D matrix dist[N][N] to store the distances between the cities.
+4.Define a function tsp(start, visited, current, cnt, path) to solve the TSP problem recursively using backtracking.
+-start: the starting city
+-visited: an integer that represents which cities have been visited
+-current: the current city
+-cnt: the number of cities visited so far
+-path: an array to store the path of cities visited so far
+-if cnt equals N (all cities visited), return the distance from the current city to the starting city.
+-Initialize ans as INF.
+-Iterate through all the cities, if i-th city is not visited, add it to the path, and calculate the distance 
+from the current city to the i-th city and recursively call tsp() with the i-th city as the current city and mark it as visited. Store the minimum distance obtained from all recursive calls in the ans variable.
+-Return ans.
+
+5.Define the main function.
+-Initialize an array path[N] to store the path of cities visited.
+-Initialize ans as INF.
+-Set the starting city as 0.
+-Iterate through all the cities and set the first city in the path array as i-th city. 
+-Calculate the distance from the starting city to the i-th city and recursively call tsp() with 
+the i-th city as the current city and mark it as visited. Store the minimum distance obtained from all recursive calls in the ans variable.
+-Print the minimum distance.
+-Print the path of cities visited.
+End.
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Merge sort-
+
+Merge Sort is a divide-and-conquer algorithm that sorts an array by dividing it into two halves, 
+sorting each half separately, and then merging the sorted halves. The following is the pseudocode for Merge Sort:
+
+1.Divide the unsorted array into two halves, a left and a right half.
+2.Recursively sort the left half of the array by calling Merge Sort on it.
+3.Recursively sort the right half of the array by calling Merge Sort on it.
+4.Merge the two sorted halves of the array into a single sorted array as follows:
+	a. Create two indices, i and j, initialized to 0, for the left and right halves of the array, respectively.
+	b. Create an index k, initialized to the leftmost position in the original array.
+	c. Compare the values at the i-th and j-th positions of the left and right halves, respectively, 
+   	   and copy the smaller value into the k-th position of the original array.
+	d. If the value in the left half is smaller, increment i by 1; otherwise, increment j by 1.
+	e. Repeat steps c and d until one of the halves is completely processed.
+	f. Copy any remaining elements from the unprocessed half into the original array, starting at position k.
+5.The array is now sorted.
+
+time complexity- O(n log n) in the average and worst cases, where n is the number of elements to be sorted. 
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Naive =>
+Algorithm for Naive String Matching:
+
+Inputs:
+
+A text string text of length n.
+A pattern string pattern of length m.
+Outputs:
+
+A list of starting indices where pattern is found in text, or an empty list if no match is found.
+Steps:
+
+1.Initialize an empty list matches to store the starting indices where pattern is found in text.
+2.For each starting index i from 0 to n-m:
+a. Initialize a variable j to 0 to represent the current index in pattern.
+b. While j is less than m and text[i+j] is equal to pattern[j], increment j.
+c. If j is equal to m, append i to matches.
+3.Return the list matches.
+
+----------------------------------------------------------------------------------------------
+
+Rabin karp-
+
+The Rabin-Karp algorithm is a string-searching algorithm that uses hash values to find the occurrence of a pattern in a given text. Here is the algorithm:
+
+1.Calculate the hash value of the pattern.
+2.Calculate the hash value of the first substring of the text, which has the same length as the pattern.
+3.Compare the hash values of the pattern and the substring. If they are equal, compare the pattern and the substring character by character to check if they match.
+4.If the hash values are not equal, move to the next substring of the text and calculate its hash value.
+5.Repeat steps 3 and 4 until a match is found or all substrings of the text have been examined.
+
+
+function RabinKarp(text, pattern):
+    n = length(text)
+    m = length(pattern)
+    d = 256  // number of possible characters in the input alphabet
+    q = a prime number
+
+    // calculate hash value of pattern
+    p = 0
+    t = 0
+    h = 1
+    for i = 0 to m-1
+        p = (d*p + pattern[i]) % q
+        t = (d*t + text[i]) % q
+    for i = 0 to m-2
+        h = (h*d) % q
+
+    // compare hash values of pattern and substrings of text
+    for i = 0 to n-m
+        if p == t
+            // compare pattern and substring character by character
+            for j = 0 to m-1
+                if text[i+j] != pattern[j]
+                    break
+            if j == m-1
+                // pattern found at index i
+        if i < n-m
+            t = (d*(t - text[i]*h) + text[i+m]) % q
+            if t < 0
+                t = t + q
+
+    return -1 // pattern not found
+--------------------------------------------------------------------------------------------
+kmp-
+
+
+The KMP (Knuth-Morris-Pratt) algorithm is a pattern matching algorithm that finds all occurrences 
+of a given pattern string pat in a text string txt in linear time O(N+M), where N is the length of txt 
+and M is the length of pat. Here is the step-by-step algorithm for KMP:
+
+1.Compute the longest proper prefix that is also a suffix for each prefix of the pattern string pat. 
+This can be done using a pre-processing step called "building the LPS (Longest Proper Suffix) array".
+2.Initialize two pointers i and j to 0, representing the current positions in the text string txt and pattern string pat, respectively.
+3.While the remaining length of txt (i.e., N - i) is greater than or equal to the remaining length of pat (i.e., M - j), do the following:
+
+	a. If the current characters in txt and pat match (i.e., txt[i] == pat[j]), then increment both i and j.
+
+	b. If j reaches the end of pat, then a match has been found at index i - M, and j should be set to 
+	the length of the longest proper suffix of pat[0:j-1] (i.e., j = lps[j-1]).
+
+	c. If the current characters in txt and pat do not match, then set j to the length of the longest proper suffix of pat[0:j-1] (i.e., j = lps[j-1]). If j is already 0, then increment i.
+4.Repeat step 3 until the end of txt is reached.
+
+-----------------------------------------------------------------------------------
+
+kruskal-
+Kruskal's algorithm is a greedy algorithm that finds a minimum spanning tree for a connected weighted graph. The algorithm operates by iteratively adding the next lightest edge that does not create a cycle in the minimum spanning tree. The steps of Kruskal's algorithm are:
+
+Sort all the edges in increasing order of their weight.
+Initialize an empty minimum spanning tree.
+For each edge in the sorted order:
+a. If adding the edge does not create a cycle, add it to the minimum spanning tree.
+b. If adding the edge creates a cycle, discard it.
+Repeat step 3 until there are (V-1) edges in the minimum spanning tree, where V is the number of vertices in the graph.
+The pseudocode for Kruskal's algorithm is as follows:
+
+vbnet
+Copy code
+Kruskal(G):
+    1. Create a forest F (a set of trees), where each vertex in the graph is a separate tree.
+    2. Create a set S containing all the edges in the graph.
+    3. Sort the edges in S in non-decreasing order of their weight.
+    4. For each edge (u, v) in S, in non-decreasing order of their weight:
+        a. If u and v belong to different trees in F, add the edge (u, v) to the forest F, combining the two trees into a single tree.
+    5. Return the forest F, which is the minimum spanning tree of the graph.
+Here, we are using disjoint-set data structure to keep track of the connected components of the graph. The time complexity of Kruskal's algorithm is O(E log E) or O(E log V), where E is the number of edges in the graph and V is the number of vertices in the graph.
+
+
+
+
+---------------------------------------------
+prims-
+Prim's algorithm is a greedy algorithm that finds a minimum spanning tree for a weighted undirected graph. Here is the step-by-step algorithm for Prim's algorithm:
+
+Choose a vertex to start from, and mark it as visited. Initialize the minimum spanning tree (MST) as empty.
+
+Find all the edges connected to the visited vertex and add them to a priority queue. The priority queue should be ordered by the weight of the edges in ascending order.
+
+Select the edge with the lowest weight from the priority queue. If adding this edge creates a cycle in the MST, discard it and select the next lowest-weighted edge. If it doesn't create a cycle, add it to the MST and mark the endpoint vertex as visited.
+
+Repeat steps 2 and 3 until all the vertices are visited or there are no more edges to add.
+
+The MST is the set of edges that were added to it during the algorithm.
+
+Here is the pseudocode for Prim's algorithm:
+
+vbnet
+Copy code
+MST-Prim(G, s):
+    for each vertex v in G:
+        key[v] = infinity
+        parent[v] = null
+    key[s] = 0
+    Q = priority queue containing all vertices in G
+    while Q is not empty:
+        u = vertex with the minimum key value in Q
+        remove u from Q
+        for each neighbor v of u:
+            if v is still in Q and the weight of the edge (u, v) is less than key[v]:
+                parent[v] = u
+                key[v] = weight(u, v)
+                decrease-key(Q, v, key[v])
+    return the set of edges in the MST defined by parent
+In this algorithm, G is the input graph, s is the starting vertex, key is an array that stores the minimum weight of the edge connecting each vertex to the MST, and parent is an array that stores the parent of each vertex in the MST. decrease-key(Q, v, key[v]) is a function that decreases the key value of vertex v in the priority queue Q to key[v].
+
+
+
+
