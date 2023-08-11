@@ -221,7 +221,7 @@ int main()
     // display(head); // ...cycle goes on
     //detect cycle
     // Hare & Tortoise Algorithm
-    cout<<"\nCycle detect-1 OR Cycle not dtect-0 =>"<<detectCycle(head);
+    cout<<"\nCycle detect-1 OR Cycle not detect-0 ======>"<<detectCycle(head);
     
     //Remove cycle
     removeCycle(head);
@@ -230,3 +230,30 @@ int main()
     display(head);
     return 0;
 }
+
++-------------------------------------------------------------------------------------------------+
+
+OUTPUT:
+
+4 3 1 2 5 
+Element 4 Found at index 0
+
+Element 3 is deleted
+4 1 2 5 
+
+Element 4 is deleted
+1 2 5 
+
+Reverse : 5 2 1 
+Reverse Rec: 1 2 5 
+    
+Linkedlist =>
+1 2 5 6 7 
+    
+Cycle detect-1 OR Cycle not detect-0 ======>1
+Cycle removed..
+
+Linkedlist =>1 2 5 6 7 
+
+    
++-------------------------------------------------------------------------------------------------+
