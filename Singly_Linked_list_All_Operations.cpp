@@ -1,4 +1,4 @@
-//Singly Linked list Operations
+//Linked list Operations
 #include <iostream>
 using namespace std;
 
@@ -113,7 +113,6 @@ node* reverse(node* &head)
     }
     return prev;
 }
-
 //recursive
 node* reverseRec(node* &head)
 {
@@ -127,6 +126,66 @@ node* reverseRec(node* &head)
     return n;
 }
 
+void makeCycle(node* &head,int position)
+{
+    node* temp=head;
+    node* t;
+    int count=1;
+    
+    while(temp->next != NULL)
+    {
+        if(count==position)
+        {
+            t=temp;
+        }
+        temp=temp->next;
+        count++;
+    }
+    temp->next=t;
+}
+
+bool detectCycle(node* &head)
+{
+    node *slow=head;
+    node *fast=head;
+    
+    while(fast!=NULL && fast->next!=NULL)
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+        
+        if(slow==fast)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+//Remove cycle
+
+node* removeCycle(node* &head)
+{
+    node *slow=head;
+    node *fast=head;
+    
+    do
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    while(slow!=fast);
+    
+    fast=head;
+    while(slow->next != fast->next)
+    {
+        slow=slow->next;
+        fast=fast->next;
+    }
+    slow->next=NULL;
+    fast=head;
+    return fast;
+}
 int main() 
 {
     node* head=NULL;
@@ -152,5 +211,22 @@ int main()
     cout<<"\n\nReverse Rec: ";
     node* newhead2=reverseRec(newhead1);
     display(newhead2);
+    
+    insertAtTail(head,6);
+    insertAtTail(head,7);
+    cout<<"\nLinkedlist =>"<<endl;
+    display(head);
+    //Make cycle-just for understanding
+    makeCycle(head,3);
+    // display(head); // ...cycle goes on
+    //detect cycle
+    // Hare & Tortoise Algorithm
+    cout<<"\nCycle detect-1 OR Cycle not dtect-0 =>"<<detectCycle(head);
+    
+    //Remove cycle
+    removeCycle(head);
+    cout<<"\nCycle removed.."<<endl;
+    cout<<"\nLinkedlist =>";
+    display(head);
     return 0;
 }
