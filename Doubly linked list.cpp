@@ -1,4 +1,3 @@
-// Doubly linked list
 #include <iostream>
 using namespace std;
 
@@ -94,6 +93,27 @@ void deletion(node* &head,int pos)
     delete temp;
 }
 
+node* reverse(node* &head)
+{
+    node* p1=head;
+    node* p2=p1->next;
+    
+    p1->next=NULL;
+    p1->prev=p2;
+    
+    while(p2!=NULL)
+    {
+        p2->prev=p2->next;
+        p2->next=p1;
+        
+        p1=p2;
+        p2=p2->prev;
+    }
+    head=p1;
+    
+    return p1;
+}
+
 int main() {
     // Write C++ code here
     node* head=NULL;
@@ -115,16 +135,18 @@ int main() {
     
     deletion(head,4);cout<<endl;//at end
     display(head);
+    
+    //Reverse list
+    head=reverse(head);cout<<endl;
+    display(head);
+    
     return 0;
 }
 
-
-
-
 OUTPUT:
-
 1 2 3 4 
 6 5 1 2 3 4 
 6 5 1 3 4 
 5 1 3 4 
 5 1 3 
+3 1 5 
