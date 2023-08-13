@@ -33,7 +33,7 @@ void Binarysearch(int arr[], int n, int search_ele) {
 
 int BinarysearchRecursive(int arr[], int search_ele, int start, int end) {
     if (start <= end) {
-        int mid = start + (end - start) / 2;
+        int mid = (start - end) / 2;
         if (search_ele == arr[mid])
             return mid;
         if (search_ele < arr[mid])
